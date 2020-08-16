@@ -21,7 +21,7 @@
                                 <form class="flag-submit-form" action="{% url 'ctf:submit' flag.id %}" method="post">
                                     {% csrf_token %}
                                     <div class="flag-answer mdc-text-field">
-                                        <input class="mdc-text-field__input" type="text" id="submit_value" name="value">
+                                        <input class="mdc-text-field__input" type="text" id="submit_value" name="value" autocomplete="off">
                                         <div class="mdc-line-ripple"></div>
                                     </div>                            
                                     <div class="flag-submit mdc-card__action-buttons">
