@@ -16,12 +16,16 @@ function Flaglist() {
             return new mdc.textField.MDCTextField(el);
         });
         self.dialog = new mdc.dialog.MDCDialog(document.querySelector('.mdc-dialog'));
+        
+        // Init mansory card grid
+        $('.grid__inner').masonry({
+            itemSelector: '.grid__cell',
+            columnWidth: 350,
+            gutter: 10
+        });
     }
 
     this.initClick = () => {
-        // $('.flag-submit .mdc-button').on('click', function(){
-        //     $('#flag-submit-form').submit();
-        // });
     }
 
     this.initDialog = function(){

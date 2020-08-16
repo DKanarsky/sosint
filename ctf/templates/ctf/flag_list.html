@@ -5,35 +5,35 @@
 
 {% block content %}
     {% if data|length > 0 %}
-    <div class="flag-list-grid mdc-layout-grid mdc-layout-grid--align-left mdc-layout-grid--fixed-column-width">
-        <div class="mdc-layout-grid__inner">
-            {% for flag, captured in data %}
-                <div class="mdc-layout-grid__cell">
-                    <div class="mdc-card flag-card {{ captured|yesno:'captured,' }}" data-flag-id="{{ flag.id }}">
-                        <div class="mdc-card__primary-action flag-card__primary-action" tabindex="0">                  
-                        <div class="flag-card__primary">
-                            <h2 class="flag-card__title mdc-typography mdc-typography--headline6">{{ flag.title }}</h2>
-                            <h3 class="flag-card__subtitle mdc-typography mdc-typography--subtitle2">Очки: {{ flag.score }}</h3>
-                        </div>
-                        <div class="flag-card__secondary mdc-typography mdc-typography--body2">{{ flag.task|linebreaksbr }}</div>
-                        </div>
-                        <div class="mdc-card__actions">
-                            <form id="flag-submit-form" action="{% url 'ctf:submit' flag.id %}" method="post">
-                                {% csrf_token %}
-                                <div class="flag-answer mdc-text-field">
-                                    <input class="mdc-text-field__input" type="text" id="submit_value" name="value">
-                                    <div class="mdc-line-ripple"></div>
-                                </div>                            
-                                <div class="flag-submit mdc-card__action-buttons">
-                                    <button class="mdc-button mdc-card__action mdc-card__action--button"><span class="mdc-button__ripple"></span>Отправить</button>
-                                </div>
-                            </form>
+        <div class="grid">
+            <div class="grid__inner">
+                {% for flag, captured in data %}
+                    <div class="grid__cell">
+                        <div class="mdc-card flag-card {{ captured|yesno:'captured,' }}" data-flag-id="{{ flag.id }}">
+                            <div class="mdc-card__primary-action flag-card__primary-action" tabindex="0">                  
+                            <div class="flag-card__primary">
+                                <h2 class="flag-card__title mdc-typography mdc-typography--headline6">{{ flag.title }}</h2>
+                                <h3 class="flag-card__subtitle mdc-typography mdc-typography--subtitle2">Очки: {{ flag.score }}</h3>
+                            </div>
+                            <div class="flag-card__secondary mdc-typography mdc-typography--body2">{{ flag.task|linebreaksbr }}</div>
+                            </div>
+                            <div class="mdc-card__actions">
+                                <form class="flag-submit-form" action="{% url 'ctf:submit' flag.id %}" method="post">
+                                    {% csrf_token %}
+                                    <div class="flag-answer mdc-text-field">
+                                        <input class="mdc-text-field__input" type="text" id="submit_value" name="value">
+                                        <div class="mdc-line-ripple"></div>
+                                    </div>                            
+                                    <div class="flag-submit mdc-card__action-buttons">
+                                        <button class="mdc-button mdc-card__action mdc-card__action--button"><span class="mdc-button__ripple"></span>Отправить</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
-    </div>
     {% else %}
         <p>Нет доступных задач</p>
     {% endif %}
@@ -81,7 +81,8 @@
       </div>
 {% endblock %}
 
-{% block scripts %}
+{% block scripts %} 
+    <script type = "text/javascript" src="{% static 'ctf/js/mansory.pkgd.min.js' %}"></script>
     <script type = "text/javascript" src="{% static 'ctf/js/flaglist.js' %}"></script>
     <script>
         var current = new Flaglist();
