@@ -1,0 +1,11 @@
+.vscode/*
+*/migrations/*
+*/__pycache__/*
+*.sqlite3
+*.pyc
+app.yaml
+
+settings.py
+
+websosint/settings/local.py
+websosint/settings/prod.py

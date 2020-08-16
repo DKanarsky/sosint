@@ -1,0 +1,18 @@
+<h1>{{ flag.title }}</h1>
+
+<h4>{{ flag.task }}</h4>
+
+<ul>
+{% for error in error_messages %}
+    <li>{{ error }}</li>
+{% endfor %}
+</ul>
+
+
+{% if captured %}<p><strong>Флаг захвачен!</strong></p>{% endif %}
+
+<form action="{% url 'ctf:submit' flag.id %}" method="post">
+{% csrf_token %}
+<input type="text" id="submit_value" name="value" />
+<input type="submit" value="Submit" />
+</form>
