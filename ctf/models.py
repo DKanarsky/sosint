@@ -79,7 +79,7 @@ class Submit(models.Model):
             flag = Flag.objects.get(pk=self.flag.pk)
             value = self.norm_value()
             if flag.key_pattern:
-                regex = re.compile(flag.key_pattern)
+                regex = re.compile(flag.key_pattern, re.IGNORECASE)
                 self.captured = regex.match(value) is not None
             else:
                 self.captured = flag.key == value
