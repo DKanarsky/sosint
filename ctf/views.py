@@ -41,30 +41,3 @@ def flag_list(request, messages=[]):
     # return render(request, 'ctf/flag_cards.html', {'data': data, 'messages' : messages})
 
     return render(request, "ctf/flag_cards.html", {'flag': flag, 'data': data, 'form': form, 'msg' : msg})
-
-
-
-@login_required
-def submit(request, flag_id):
-    flag = get_object_or_404(Flag, pk=flag_id)
-    user = request.user
-    error = False
-    messages = []
-    try:
-        submit_value = request.POST.get('value', None)
-        if submit_value is None or submit_value == '':
-            messages.append("Вы не ввели вариант ответа")
-            error = True
-        if is_captured(flag, user):
-            messages.append("Данный флаг уже захвачен")
-            error = True
-    except Exception:
-        messages.append("Непредвиденная ошибка")
-        error = True
-    finally:
-        if not error:
-            submit = Submit(flag=flag, user=user, value=submit_value)
-            submit.save()
-            if not submit.captured and not error:
-                messages.append("Ответ невереный")
-        return flag_list(request, messages=messages)
