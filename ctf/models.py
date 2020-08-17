@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 
 from datetime import datetime
 
@@ -8,17 +9,9 @@ class Flag(models.Model):
     task = models.TextField(verbose_name="Task")
     enabled = models.BooleanField(default=True, verbose_name="Enabled")
     comment = models.TextField(null=True, blank=True, verbose_name="Comment")
-    key = models.CharField(null=True, max_length=100, verbose_name="Secret")
+    key = models.CharField(null=True, blank=True, max_length=100, verbose_name="Secret")
+    key_pattern = models.CharField(null=True, blank=True, max_length=100, verbose_name="Secret pattern")
     score = models.IntegerField(null=False, default=1)
-
-
-    # def save(self, *args, **kwargs):
-    #     pk = self.pk
-    #     super().save(*args, **kwargs)
-    #     if not pk:
-    #         # create an element in chain with null parent
-    #         FlagChain.objects.create (child=self, parent=None)
-
 
     def __str__(self):
         return f"Title: {self.title} | Score:{self.score}"
@@ -74,15 +67,25 @@ class Submit(models.Model):
 
 
     def norm_value(self):
-        return self.value.lower().strip()
+        return self.value.lower().strip(" '\"")
 
 
     def save(self, *args, **kwargs):
+        import re
+
         if self.pk:
             raise Exception("You can't modify existing submits!")
-        self.captured = True \
-            if self.norm_value() == Flag.objects.get(pk=self.flag.pk).key \
-            else False
+        try:
+            flag = Flag.objects.get(pk=self.flag.pk)
+            value = self.norm_value()
+            if flag.key_pattern:
+                regex = re.compile(flag.key_pattern)
+                self.captured = regex.match(value) is not None
+            else:
+                self.captured = flag.key == value
+        except ObjectDoesNotExist:
+            return
+
         super().save(*args, **kwargs)
 
 
