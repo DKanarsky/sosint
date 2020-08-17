@@ -1,4 +1,18 @@
 
+small {
+  font-size: 75%;
+}
+
+form .error {
+  color: #f44336;
+}
+
+form .error, form .help-block {
+  line-height: 12px;
+  position: relative;
+  top: -10px;
+}
+
 .grid__cell{
   margin-bottom: 10px;
 }

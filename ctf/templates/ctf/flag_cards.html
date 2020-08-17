@@ -1,0 +1,103 @@
+{% extends "ctf/layout/base.html" %}
+{% load static %}
+
+{% block title %} Задачи {% endblock title %}
+
+{% block content %}
+    {% if data|length > 0 %}
+        <div class="grid">
+            <div class="grid__inner">
+                {% for flag, captured in data %}
+                    <div class="grid__cell">
+                        <div class="mdc-card flag-card {{ captured|yesno:'captured,' }}" data-flag-id="{{ flag.id }}">
+                            <div class="mdc-card__primary-action flag-card__primary-action" tabindex="0">                  
+                            <div class="flag-card__primary">
+                                <h2 class="flag-card__title mdc-typography mdc-typography--headline6">{{ flag.title }}</h2>
+                                <h3 class="flag-card__subtitle mdc-typography mdc-typography--subtitle2">Очки: {{ flag.score }}</h3>
+                            </div>
+                            <div class="flag-card__secondary mdc-typography mdc-typography--body2">{{ flag.task|linebreaksbr }}</div>
+                            </div>
+                            <div class="mdc-card__actions">
+                                <form class="flag-view-form" action="" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="flag_id" value="{{ flag.id }}">
+                                    <button type="submit" class="mdc-button mdc-card__action mdc-card__action--button"><span class="mdc-button__ripple"></span>Показать</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <p>Нет доступных задач</p>
+    {% endif %}
+
+    {% if flag %}
+        <div class="mdc-dialog mdc-dialog--open">
+            <div class="mdc-dialog__container">
+                <div class="mdc-dialog__surface"
+                    role="alertdialog"
+                    aria-modal="true"
+                    aria-labelledby="my-dialog-title"
+                    aria-describedby="my-dialog-content">
+                    <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
+                    <h2 class="mdc-dialog__title" id="dialog-title">{{ flag.title }}</h2>
+                    <div class="mdc-dialog__content" id="my-dialog-content">
+                        <h4 id="dialog-subtitle">Очки: {{ flag.score }}</h4>
+                        <p>{{ flag.task }}</p>
+                        <form id="flag-submit-form" class="flag-submit-form" action="" method="post">
+                            {% csrf_token %}
+                            <div>
+                                <small class="error dialog-error">
+                                    {% if msg|length > 0 %}
+                                            {% for m in msg %}
+                                                {{ m }}<br>
+                                            {% endfor %}
+                                    {% endif %}
+                                </small>
+                            </div>
+                            <div class="flag-answer mdc-text-field mdc-text-field--filled mdc-text-field--focused">
+                                {{ form.answer }}
+                                <div class="mdc-line-ripple"></div>
+                                <label for="submit-answer-input" class="mdc-floating-label">Ответ</label>
+                            </div>  
+                            {{ form.flag_id }}
+                        </form>
+                    </div>
+                    <div class="mdc-dialog__actions">
+                        <div class="flag-submit mdc-card__action-buttons">
+                            <a class="mdc-button mdc-card__action mdc-card__action--button" href="{% url 'ctf:index' %}"><span class="mdc-button__ripple"></span>Отмена</a>
+                            <button id="btn-submit-answer" class="mdc-button mdc-card__action mdc-card__action--button"><span class="mdc-button__ripple"></span>Отправить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mdc-dialog__scrim"></div>
+        </div>
+    {% endif %}
+
+    <div class="mdc-snackbar mdc-snackbar--stacked">
+        <div class="mdc-snackbar__surface">
+            <div class="mdc-snackbar__label"
+                    role="status"
+                    aria-live="polite">
+                Сообщение
+            </div>
+
+            <div class="mdc-snackbar__actions">
+                <button class="mdc-icon-button mdc-snackbar__dismiss material-icons" title="Dismiss">close</button>
+            </div>
+        </div>
+      </div>
+{% endblock %}
+
+{% block scripts %} 
+    <script type = "text/javascript" src="{% static 'ctf/js/mansory.pkgd.min.js' %}"></script>
+    <script type = "text/javascript" src="{% static 'ctf/js/flaglist.js' %}"></script>
+    <script>
+        var current = new Flaglist();
+        current.init();    
+    </script>
+{% endblock %}
+
