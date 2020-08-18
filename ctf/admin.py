@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Flag, FlagChain, Submit
+from .models import Flag, FlagGroup, FlagChain, Submit
 
 class FlagChainInline(admin.StackedInline):
     model = FlagChain
@@ -26,5 +26,6 @@ class SubmitAdmin(admin.ModelAdmin):
 
 # Register your models here.
 admin.site.register(Flag, FlagAdmin)
+admin.site.register(FlagGroup)
 admin.site.register(FlagChain, FlagCahinAdmin)
 admin.site.register(Submit, SubmitAdmin)

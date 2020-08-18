@@ -6,15 +6,52 @@ from datetime import datetime
 
 class Flag(models.Model):
     title = models.CharField(null=True, blank=True, max_length=200)
+    group = models.ForeignKey(
+        to="FlagGroup", 
+        on_delete=models.SET_NULL, 
+        null=True,
+        blank=True
+    )
     task = models.TextField(verbose_name="Task")
     enabled = models.BooleanField(default=True, verbose_name="Enabled")
-    comment = models.TextField(null=True, blank=True, verbose_name="Comment")
-    key = models.CharField(null=True, blank=True, max_length=100, verbose_name="Secret")
-    key_pattern = models.CharField(null=True, blank=True, max_length=100, verbose_name="Secret pattern")
+    comment = models.TextField(
+        null=True, 
+        blank=True, 
+        verbose_name="Comment"
+        )
+    key = models.CharField(
+        null=True, 
+        blank=True, 
+        max_length=100, 
+        verbose_name="Secret"
+        )
+    key_pattern = models.CharField(
+        null=True, 
+        blank=True, 
+        max_length=100, 
+        verbose_name="Secret pattern"
+        )
     score = models.IntegerField(null=False, default=1)
 
     def __str__(self):
         return f"Title: {self.title} | Score:{self.score}"
+
+
+class FlagGroup(models.Model):
+    name = models.CharField(
+        null=False, 
+        blank=False, 
+        unique=True, 
+        max_length=200
+        )
+    comment = models.TextField(
+        null=True, 
+        blank=True, 
+        verbose_name="Comment"
+        )
+
+    def __str__(self):
+        return self.name
 
 
 class FlagChain(models.Model):
