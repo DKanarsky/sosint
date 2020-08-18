@@ -10,7 +10,7 @@ class FlagChainInline(admin.StackedInline):
 
 class FlagAdmin(admin.ModelAdmin):
     inlines = [FlagChainInline]
-    list_display = ('title', 'score', 'enabled')
+    list_display = ('title', 'group', 'score', 'enabled')
     list_filter = ['score', 'enabled']
 
 
