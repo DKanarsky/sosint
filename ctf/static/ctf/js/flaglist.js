@@ -29,6 +29,10 @@ function Flaglist() {
         $(".mdc-dialog").on('click', '#btn-submit-answer', function(){
             $('#flag-submit-form').submit();
         })
+        $(".mdc-card").on('click',function(){
+            var flag_id = $(this).data("flag-id");
+            $('.mdc-card[data-flag-id="'+ flag_id +'"] .flag-view-form').submit();
+        })
     }
 
     this.initDialog = function(){
