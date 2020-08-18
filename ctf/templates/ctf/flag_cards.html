@@ -44,7 +44,7 @@
                     <!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
                     <h2 class="mdc-dialog__title" id="dialog-title">{{ flag.title }}</h2>
                     <div class="mdc-dialog__content" id="my-dialog-content">
-                        <h4 id="dialog-subtitle">Очки: {{ flag.score }}</h4>
+                        <h6 id="dialog-subtitle">Очки: {{ flag.score }}</h6>
                         <p>{{ flag.task|linebreaks }}</p>
                         <form id="flag-submit-form" class="flag-submit-form" action="" method="post">
                             {% csrf_token %}
