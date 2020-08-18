@@ -3,7 +3,13 @@
       <a href="#" class="brand-logo ctf-logo">OSINT CTF</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         {% if user.is_authenticated %}
-            <li>{{ user.get_username }}</li>
+            <li>
+                {% if user.is_superuser %}
+                    <a href="admin/">{{ user.get_username }}</a>
+                {% else %}
+                    {{ user.get_username }}
+                {% endif %}
+            </li>
             <li><a href="{% url 'logout' %}">Выйти</a></li>
         {% endif %}
       </ul>
