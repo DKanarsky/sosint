@@ -14,8 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.contrib.auth.views import LoginView, LogoutView
+from django.conf import settings
 from rest_framework import routers
 from rest import views
 
@@ -26,7 +27,7 @@ urlpatterns = [
     path('', include('ctf.urls')),
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path(r'accounts/login/', LoginView.as_view(template_name='admin/login.html')),
-    path(r'accounts/logout/', LogoutView.as_view()),
+    re_path(r'^logout/$', LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout')
 ]
