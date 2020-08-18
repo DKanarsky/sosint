@@ -11,13 +11,11 @@
                     <div class="grid__cell">
                         <div class="mdc-card flag-card {{ captured|yesno:'light-blue accent-1,' }}" data-flag-id="{{ flag.id }}">
                             <div class="mdc-card__primary-action flag-card__primary-action" tabindex="0">                  
-                            <div class="flag-card__primary">
-                                <h2 class="flag-card__title mdc-typography mdc-typography--headline6">{{ flag.title }}</h2>
-                                <h3 class="flag-card__subtitle mdc-typography mdc-typography--subtitle2">Очки: {{ flag.score }}</h3>
-                            </div>
-                            <div class="flag-card__secondary mdc-typography mdc-typography--body2">{{ flag.task|linebreaks }}</div>
-                            </div>
-                            <div class="mdc-card__actions">
+                                <div class="flag-card__primary">
+                                    <h2 class="flag-card__title mdc-typography mdc-typography--headline6">{{ flag.title }}</h2>
+                                    <h3 class="flag-card__subtitle mdc-typography mdc-typography--subtitle2">Очки: {{ flag.score }}</h3>
+                                </div>
+                                <div class="flag-card__secondary mdc-typography mdc-typography--body2">{{ flag.task|linebreaks }}</div>
                                 <form class="flag-view-form" action="" method="post">
                                     {% csrf_token %}
                                     <input type="hidden" name="flag_id" value="{{ flag.id }}">
