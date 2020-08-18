@@ -23,6 +23,7 @@ function Flaglist() {
             gutter: 10,
             fitWidth: true
         });
+        $('.grid__inner').removeClass('hidden');
     }
 
     this.initClick = () => {

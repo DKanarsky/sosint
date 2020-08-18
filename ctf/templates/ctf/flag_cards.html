@@ -6,7 +6,7 @@
 {% block content %}
     {% if data|length > 0 %}
         <div class="grid">
-            <div class="grid__inner">
+            <div class="grid__inner hidden">
                 {% for flag, captured in data %}
                     <div class="grid__cell">
                         <div class="mdc-card flag-card {{ captured|yesno:'light-blue accent-1,' }}" data-flag-id="{{ flag.id }}">

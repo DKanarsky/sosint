@@ -13,6 +13,10 @@ form .error, form .help-block {
   top: -10px;
 }
 
+.hidden {
+  clip-path: circle(0);
+}
+
 .grid__inner { 
   margin: 0 auto; 
 }
