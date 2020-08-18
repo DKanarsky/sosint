@@ -21,8 +21,8 @@ form .error, form .help-block {
   margin-bottom: 10px;
 }
 
-.ctf-logo {
-  margin-left: 10px;
+.nav-wrapper {
+  padding: 0px 10px;
 }
 
 .flag-card {
