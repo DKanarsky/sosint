@@ -20,7 +20,8 @@ function Flaglist() {
         $('.grid__inner').masonry({
             itemSelector: '.grid__cell',
             columnWidth: 350,
-            gutter: 10
+            gutter: 10,
+            fitWidth: true
         });
     }
 

@@ -13,8 +13,16 @@ form .error, form .help-block {
   top: -10px;
 }
 
+.grid__inner { 
+  margin: 0 auto; 
+}
+
 .grid__cell{
   margin-bottom: 10px;
+}
+
+.ctf-logo {
+  margin-left: 10px;
 }
 
 .flag-card {

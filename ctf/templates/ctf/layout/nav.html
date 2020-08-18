@@ -1,0 +1,11 @@
+<nav class="light-blue lighten-1">
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo ctf-logo">OSINT CTF</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        {% if user.is_authenticated %}
+            <li>{{ user.get_username }}</li>
+            <li><a href="{% url 'logout' %}">Выйти</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
