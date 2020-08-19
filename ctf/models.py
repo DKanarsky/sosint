@@ -49,6 +49,10 @@ class FlagGroup(models.Model):
         blank=True, 
         verbose_name="Comment"
         )
+    enabled = models.BooleanField(
+        default=True, 
+        verbose_name="Enabled"
+        )
 
     def __str__(self):
         return self.name
