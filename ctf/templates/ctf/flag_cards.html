@@ -9,7 +9,7 @@
             <div class="grid__inner hidden">
                 {% for flag, captured in data %}
                     <div class="grid__cell">
-                        <div class="mdc-card flag-card {{ captured|yesno:'light-blue accent-1,' }}" data-flag-id="{{ flag.id }}">
+                        <div class="mdc-card flag-card {{ captured|yesno:'flag-captured light-blue accent-1,' }}" data-flag-id="{{ flag.id }}">
                             <div class="mdc-card__primary-action flag-card__primary-action" tabindex="0">                  
                                 <div class="flag-card__primary">
                                     <h2 class="flag-card__title mdc-typography mdc-typography--headline6">{{ flag.title }}</h2>
