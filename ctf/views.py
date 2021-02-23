@@ -1,24 +1,20 @@
 from django.shortcuts import render, redirect, get_object_or_404, render
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from  django.template.loader  import get_template
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, HttpResponse
-from django.urls import reverse
 
-from ctf.models import Flag, FlagChain, Submit
-from ctf.services import is_captured, available_flags, save_submit
+from ctf.models import Flag
+from ctf.services import (
+    is_captured, available_flags, 
+    save_submit
+)
 from ctf.forms import SubmitForm
 
 @login_required
-def flag_list(request, messages=[]):
+def flag_list(request):
     form = SubmitForm(request.POST or None)
     user = request.user
     msg = []
     data = []
     flag = None
-
     if request.method == "POST":
         if "flag_id" in request.POST:
             flag = get_object_or_404(Flag, pk=request.POST['flag_id'])
@@ -38,6 +34,13 @@ def flag_list(request, messages=[]):
     for f in flags:
         captured.append(is_captured(f, user))
     data = list(zip(flags, captured))
-    # return render(request, 'ctf/flag_cards.html', {'data': data, 'messages' : messages})
-
-    return render(request, "ctf/flag_cards.html", {'flag': flag, 'data': data, 'form': form, 'msg' : msg})
+    return render(
+        request, 
+        "ctf/flag_cards.html", 
+        {
+            'flag': flag, 
+            'data': data, 
+            'form': form, 
+            'msg' : msg
+        }
+    )
